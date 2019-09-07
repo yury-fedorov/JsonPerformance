@@ -44,12 +44,12 @@ namespace JsonPerformance
         }
 
         [Benchmark]
-        public IEnumerable<Quote> Newton()
-            => new Newtonsoft.Json.JsonSerializer().Deserialize<IEnumerable<Quote>>(
+        public List<Quote> Newton()
+            => new Newtonsoft.Json.JsonSerializer().Deserialize<List<Quote>>(
                 new JsonTextReader(new StringReader(_json) ));
 
         [Benchmark]
-        public IEnumerable<Quote> Core3() => System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Quote>>(_json);
+        public List<Quote> Core3() => System.Text.Json.JsonSerializer.Deserialize<List<Quote>>(_json);
         
     }
 }
