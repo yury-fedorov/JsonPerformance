@@ -1,12 +1,9 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
-using System.Text.Json;
 using Newtonsoft.Json;
-using System.Reflection;
-using System.IO;
-using System.Threading.Tasks;
-using System.Text;
-using System.Collections.Generic;
 
 namespace JsonPerformance
 {
@@ -18,8 +15,8 @@ namespace JsonPerformance
 
     public class Quote
     {
-        string Text { get; set; }
-        string From { get; set; }
+        public string text { get; set; }
+        public string from { get; set; }
     }
 
 
@@ -30,16 +27,16 @@ namespace JsonPerformance
         public JsonPerformanceTest() 
         {
             // load JSON file
-            _json = Get("JsonPerformance.enterpreneur-quotes.json").Result;
+            _json = Get("JsonPerformance.enterpreneur-quotes.json");
         }
 
-        public async Task<string> Get(string resource)
+        public string Get(string resource)
         {
-            var assembly = Assembly.GetEntryAssembly();
+            var assembly = typeof(Quote).Assembly;
             var resourceStream = assembly.GetManifestResourceStream(resource);
             using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
             {
-                return await reader.ReadToEndAsync();
+                return reader.ReadToEnd();
             }
         }
 
